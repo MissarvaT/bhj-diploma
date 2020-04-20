@@ -15,8 +15,9 @@ class AsyncForm {
   constructor( element ) {
     if (element == null) {
       alert('Ошибка! Элемент не найден');
-      this.element = element;
-      this.registerEvents();
+    } else {
+    this.element = element;
+    this.registerEvents();
     }
   }
 

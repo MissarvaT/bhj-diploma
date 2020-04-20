@@ -11,14 +11,15 @@ class LoginForm extends AsyncForm {
    * закрывает окно, в котором находится форма
    * */
   onSubmit( options ) {
-    User.login();
-    if (response.success) {
-      this.reset();
-      App.setState( 'user-logged' );
-      Modal.close();
-    } else {
-      alert('Ошибка при входе')
-    }
+    User.login(options.data, (err, response) => {
+      if (response.success) {
+        this.reset();
+        App.setState( 'user-logged' );
+        Modal.close();
+      } else {
+        alert('Ошибка при входе')
+      }
+    });
 
   }
 }

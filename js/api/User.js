@@ -30,7 +30,7 @@ class User {
    * */
   static current() {
     if (localStorage.user == undefined) {
-      retern undefined;
+      return undefined;
     } else {
     return JSON.parse(localStorage.user);
     }
@@ -73,8 +73,6 @@ class User {
       callback: (error, response) => {
         if (response.success) {
           User.setCurrent(response.user);
-        } else {
-          response.user;
         }
       }
     });
@@ -115,8 +113,6 @@ class User {
       callback: (error, response) => {
         if (response.success) {
           User.unsetCurrent();
-        } else {
-          response.error;
         }
       }
     });

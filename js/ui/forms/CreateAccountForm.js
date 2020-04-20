@@ -3,7 +3,7 @@
  * создания нового счёта
  * Наследуется от AsyncForm
  * */
-class CreateAccountForm {
+class CreateAccountForm extends AsyncForm {
   /**
    * Создаёт счёт с помощью Account.create и закрывает
    * окно (в котором находится форма) в случае успеха,
@@ -11,15 +11,16 @@ class CreateAccountForm {
    * и сбрасывает форму
    * */
   onSubmit( options ) {
-    Account.create(options);
-    let newAccountForm = document.getElementById('modal-new-account');
-    if (response.success) {
-      newAccountForm.close();
-      this.reset();
-      App.update();
-    } else {
-      alert('Ошибка при создании нового счета')
-    }
+    Account.create(options, (err, response) => {
+      let newAccountForm = document.getElementById('modal-new-account');
+      if (response.success) {
+        newAccountForm.close();
+        this.reset();
+        App.update();
+      } else {
+        alert('Ошибка при создании нового счета')
+      }
+    });
   }
   
 
