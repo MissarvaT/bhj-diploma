@@ -17,7 +17,6 @@ class TransactionsPage {
       this.element = element;
       this.registerEvents();
     }
-
   }
 
   /**
@@ -39,12 +38,14 @@ class TransactionsPage {
    * */
   registerEvents() {
     const accountRemoveButton = this.element.querySelector('.remove-account');
-    accountRemoveButton.addEventListener('click', () => {
+    accountRemoveButton.addEventListener('click', (e) => {
+      e.preventDefault();
       this.removeAccount();
     });
     const transactionRemoveButton = this.element.querySelector('.transaction__remove');
     if (transactionRemoveButton != null) {
-    transactionRemoveButton.addEventListener('click', (e) => {
+      transactionRemoveButton.addEventListener('click', (e) => {
+      e.preventDefault();
       this.removeTransaction(e.target.dataset.id);
     });}
   }
@@ -61,7 +62,7 @@ class TransactionsPage {
     if (this.lastOptions == null) {
       return;
     };
-    Account.remove(this.dataset.id, data, (err, response) => {
+    Account.remove(this.dataset.id, {}, (err, response) => {
       if (response.sucess) {
         alert ('Вы действительно хотите удалить счет?');
         App.update();
@@ -75,13 +76,11 @@ class TransactionsPage {
    * По удалению транзакции вызовите метод App.update()
    * */
   removeTransaction( id ) {
-    Transaction.remove(id, data, (err, response) => {
+    Transaction.remove(id, {}, (err, response) => {
       if (response.success) {
         alert('Вы действительно хотите удалить транзакцию?')
         App.update();
-      } else {
-        response.data;
-      }
+      } 
     })
   }
 
@@ -93,7 +92,7 @@ class TransactionsPage {
    * */
   render( options ) {
     if (options == null) {
-      console.error('Ошибка');
+      alert('Ошибка');
     };
     this.lastOptions = options;
     Account.get( options.account_id , {}, (err, response) => {
@@ -176,7 +175,7 @@ class TransactionsPage {
    * используя getTransactionHTML
    * */
   renderTransactions( data ) {
-    let html;
+    let html = '';
     for (let i = 0; i < data.length; i++) {
       html += getTransactionHTML ( data[i] );
     };

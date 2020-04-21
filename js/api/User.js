@@ -46,13 +46,13 @@ class User {
       data,
       responseType: 'json',
       method: 'GET',
-      callback: (error, response) => {
-        if (response.sucess) {
+      callback: (err, response) => {
+        if (response && response.user) {
           User.setCurrent(response.user);
         } else {
-          response.error
           User.unsetCurrent();
         };
+        callback(err, response);
       }
     });
   
@@ -70,10 +70,11 @@ class User {
       data,
       responseType: 'json',
       method: 'POST',
-      callback: (error, response) => {
-        if (response.success) {
+      callback: (err, response) => {
+        if (response && response.user) {
           User.setCurrent(response.user);
         }
+        callback(err, response);
       }
     });
   }
@@ -90,12 +91,11 @@ class User {
       data,
       responseType: 'json',
       method: 'POST',
-      callback: (error, response) => {
-        if (response.success) {
+      callback: (err, response) => {
+        if (response && response.user) {
           User.setCurrent(response.user);
-        } else {
-          response.error;
-        }
+        } 
+        callback(err, response);
       }
     });
   }
@@ -110,10 +110,11 @@ class User {
       data,
       responseType: 'json',
       method: 'POST',
-      callback: (error, response) => {
-        if (response.success) {
+      callback: (err, response) => {
+        if (response && response.user) {
           User.unsetCurrent();
         }
+        callback(err, response);
       }
     });
   }

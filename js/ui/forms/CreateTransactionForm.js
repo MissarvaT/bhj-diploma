@@ -18,13 +18,15 @@ class CreateTransactionForm extends AsyncForm {
    * Обновляет в форме всплывающего окна выпадающий список
    * */
   renderAccountsList() {
-    const accounts = Account.list();
-    const accountSelect = document.getElementById('expense-accounts-list');
-    accountSelect.innerHTML = '';
-    for (let account in accounts) {
-      accountSelect.innerHTML += `<option value="${account.id}">${account.name}</option>`
-    }
-
+    Account.list(User.current(), (err, response) => {
+      if (response && response.data) {
+        const accountSelect = document.getElementById('expense-accounts-list');
+        accountSelect.innerHTML = '';
+        for (let account in response.data) {
+          accountSelect.innerHTML += `<option value="${account.id}">${account.name}</option>`
+        }
+      }
+    });
   }
 
   /**
@@ -35,7 +37,7 @@ class CreateTransactionForm extends AsyncForm {
    * */
   onSubmit( options ) {
     Transaction.create(options.data, (err,response) => {
-      if (response.success) {
+      if (response && response.success) {
         this.element.clear();
         App.getModal('newIncome').close();
         App.getModal('newExpense').close();

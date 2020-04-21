@@ -20,6 +20,6 @@ const createRequest = (options = {}) => {
         options.callback(err, response);
     }
     catch ( e ) {
-        options.callback( err );
+        options.callback( e );
     };
 };

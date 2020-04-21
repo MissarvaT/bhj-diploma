@@ -56,11 +56,14 @@ class AccountsWidget {
    * */
   update() {
     if (User.current()) {
-      const accounts = Account.list();
-      this.clear();
-      for(let i=0; i < accounts.length; i++) {
-        accounts[i].render();
+      Account.list(User.current(), (err, response) => {
+        if (response && response.data) {
+          this.clear();
+      for (let i=0; i < response.data.length; i++) {
+        response.data[i].render();
       }
+        }
+      });
     }
   }
 
@@ -71,7 +74,9 @@ class AccountsWidget {
    * */
   clear() {
     const accounts = Array.from(document.querySelectorAll('.account'));
-    accounts.remove();
+    for (let i = 0; i < accounts.length; i++) {
+      accounts[i].remove();
+    }
   }
 
   /**
