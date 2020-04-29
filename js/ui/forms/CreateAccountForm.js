@@ -17,11 +17,7 @@ class CreateAccountForm extends AsyncForm {
         newAccountForm.close();
         this.reset();
         App.update();
-      } else {
-        alert('Ошибка при создании нового счета')
       }
     });
   }
-  
-
 }

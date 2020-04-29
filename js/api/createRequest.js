@@ -3,23 +3,30 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-    const request = new XMLHttpRequest();
+    let request = new XMLHttpRequest();
     request.withCredentials = true;
     try {
         if (options.method === 'GET') {
-            let url = `${options.url}?mail=${options.data.mail}?password=${options.data.password}`;
+            let url = `${options.url}?mail=${options.data.email}?password=${options.data.password}`;
             request.open('GET', url);
             request.send();
         } else {
-            const formData = new FormData();
-            formData.append('mail', `${options.data.mail}`);
+            let formData = new FormData();
+            formData.append('mail', `${options.data.email}`);
             formData.append('password', `${options.data.password}`);
             request.open(`${options.method}`, `${options.url}`);
             request.send(formData);
         };
-        options.callback(err, response);
+        request.onreadystatechange = function() {
+            if(request.readyState === 4 && request.status === 200) {
+                options.callback(null, request.response);
+            } else {
+                options.callback(request.statusText, null);
+            }
+        };
     }
     catch ( e ) {
         options.callback( e );
     };
 };
+

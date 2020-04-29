@@ -5,9 +5,6 @@
  * Имеет свойство URL, равное '/user'.
  * */
 class User {
-
-  HOST = 'https://bhj-diplom.letsdocode.ru';
-  URL = '/user';
   /**
    * Устанавливает текущего пользователя в
    * локальном хранилище.
@@ -119,3 +116,6 @@ class User {
     });
   }
 }
+
+User.HOST = 'https://bhj-diplom.letsdocode.ru';
+User.URL = '/user';

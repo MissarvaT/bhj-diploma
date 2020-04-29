@@ -16,10 +16,7 @@ class LoginForm extends AsyncForm {
         this.reset();
         App.setState( 'user-logged' );
         Modal.close();
-      } else {
-        alert('Ошибка при входе')
       }
     });
-
   }
 }
