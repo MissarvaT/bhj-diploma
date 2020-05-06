@@ -7,15 +7,15 @@ const createRequest = (options = {}) => {
     request.withCredentials = true;
     try {
         if (options.method === 'GET') {
-            let url = `${options.url}?mail=${options.data.email}?password=${options.data.password}`;
-            request.open('GET', url);
-            request.send();
+            options.url += '?';
+            for (let option in options.data) {
+                options.url += `${option}=${options.data[option]}&`;
+            };
         } else {
             let formData = new FormData();
-            formData.append('mail', `${options.data.email}`);
-            formData.append('password', `${options.data.password}`);
-            request.open(`${options.method}`, `${options.url}`);
-            request.send(formData);
+            for (let option in options.data) {
+                formData.append(option, options.data[option]);
+            };
         };
         request.onreadystatechange = function() {
             if(request.readyState === 4 && request.status === 200) {
@@ -24,9 +24,12 @@ const createRequest = (options = {}) => {
                 options.callback(request.statusText, null);
             }
         };
+        request.open(`${options.method}`, options.url);
+        request.send(formData);
     }
     catch ( e ) {
         options.callback( e );
     };
+    return request;
 };
 
