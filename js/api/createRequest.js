@@ -3,7 +3,8 @@
  * на сервер.
  * */
 const createRequest = (options = {}) => {
-    let request = new XMLHttpRequest();
+    const request = new XMLHttpRequest();
+    const formData = new FormData();
     request.withCredentials = true;
     try {
         if (options.method === 'GET') {
@@ -12,7 +13,6 @@ const createRequest = (options = {}) => {
                 options.url += `${option}=${options.data[option]}&`;
             };
         } else {
-            let formData = new FormData();
             for (let option in options.data) {
                 formData.append(option, options.data[option]);
             };
