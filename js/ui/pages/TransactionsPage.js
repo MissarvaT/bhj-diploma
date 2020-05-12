@@ -23,10 +23,7 @@ class TransactionsPage {
    * Вызывает метод render для отрисовки страницы
    * */
   update() {
-    this.render();
-    if (options) {
-      this.render(options);
-    }
+    this.render(this.lastOptions);
 
   }
 
@@ -92,10 +89,10 @@ class TransactionsPage {
    * */
   render( options ) {
     if (options == null) {
-      alert('Ошибка');
+      return;
     };
     this.lastOptions = options;
-    Account.get( options.account_id , {}, (err, response) => {
+    Account.get(options.account_id , {}, (err, response) => {
       if (response.success) {
         this.renderTitle();
       } 

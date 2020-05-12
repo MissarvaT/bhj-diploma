@@ -6,6 +6,8 @@ const createRequest = (options = {}) => {
     const request = new XMLHttpRequest();
     const formData = new FormData();
     request.withCredentials = true;
+    request.responseType = 'json';
+    console.log(options.data);
     try {
         if (options.method === 'GET') {
             options.url += '?';
@@ -25,11 +27,16 @@ const createRequest = (options = {}) => {
             }
         };
         request.open(`${options.method}`, options.url);
-        request.send(formData);
+        if (options.method === 'GET') {
+            request.send(); 
+        } else {
+            request.send(formData);
+        };
+
+        return request.response;
     }
     catch ( e ) {
         options.callback( e );
     };
-    return request;
 };
 
