@@ -12,9 +12,8 @@ class CreateAccountForm extends AsyncForm {
    * */
   onSubmit( options ) {
     Account.create(options.data, (err, response) => {
-      let newAccountForm = document.getElementById('modal-new-account');
-      if (response.success) {
-        newAccountForm.close();
+      if (response && response.success) {
+        App.getModal('createAccount').close();
         this.element.reset();
         App.update();
       }

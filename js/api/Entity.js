@@ -25,11 +25,9 @@ class Entity {
    * что наследуется от Entity)
    * */
   static create ( data, callback = f => f ) {
-    const dataCopy = Object.assign({}, data);
-    dataCopy._method = 'PUT';
     return createRequest({
       url: this.HOST + this.URL,
-      dataCopy,
+      data: Object.assign({ _method: 'PUT' }, data),
       responseType: 'json',
       method: 'POST',
       callback
@@ -41,10 +39,9 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static get( id = '', data, callback = f => f ) {
-    data.id = id;
     return createRequest({
       url: this.HOST + this.URL,
-      dataCopy,
+      data: Object.assign({id: id}, data),
       responseType: 'json',
       method: 'GET',
       callback
@@ -56,12 +53,9 @@ class Entity {
    * (в зависимости от того, что наследуется от Entity)
    * */
   static remove( id = '', data, callback = f => f ) {
-    const dataCopy = Object.assign({}, data);
-    dataCopy.id = id;
-    dataCopy._method = 'DELETE';
     return createRequest({
       url: this.HOST + this.URL,
-      dataCopy,
+      data: Object.assign({id: id, _method: 'DELETE' }, data),
       responseType: 'json',
       method: 'POST',
       callback

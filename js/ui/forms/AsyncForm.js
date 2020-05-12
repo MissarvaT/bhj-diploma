@@ -61,13 +61,10 @@ class AsyncForm {
    * данные, полученные из метода getData()
    * */
   submit() {
-    const newData = {},
-    data = this.getData(),
-    url = this.element.getAttribute('action'),
-    method = this.element.getAttribute('method');
-    newData.url = url,
-    newData.method = method,
-    newData.data = data;
+    const newData = {};
+    newData.url = this.element.getAttribute('action'),
+    newData.method = this.element.getAttribute('method'),
+    newData.data = this.getData();
     this.onSubmit(newData);
     }
 }
