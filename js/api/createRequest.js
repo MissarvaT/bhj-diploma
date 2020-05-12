@@ -6,8 +6,7 @@ const createRequest = (options = {}) => {
     const request = new XMLHttpRequest();
     const formData = new FormData();
     request.withCredentials = true;
-    request.responseType = options.responseType;    
-    console.log(options);
+    request.responseType = options.responseType;
     try {
         if (options.method === 'GET') {
             options.url += '?';
@@ -32,7 +31,6 @@ const createRequest = (options = {}) => {
         } else {
             request.send(formData);
         };
-        console.log(request);
         return request;
     }
     catch ( e ) {
