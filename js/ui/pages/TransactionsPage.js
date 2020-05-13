@@ -39,12 +39,15 @@ class TransactionsPage {
       e.preventDefault();
       this.removeAccount();
     });
-    const transactionRemoveButton = this.element.querySelector('.transaction__remove');
-    if (transactionRemoveButton != null) {
-      transactionRemoveButton.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.removeTransaction(e.target.dataset.id);
-    });}
+    const transactionRemoveButtons = this.element.querySelectorAll('.transaction__remove');
+    if (transactionRemoveButtons != null) {
+      for (let i=0; i < transactionRemoveButtons.length; i++) {
+        transactionRemoveButtons[i].addEventListener('click', (e) => {
+          e.preventDefault();
+          this.removeTransaction(transactionRemoveButtons[i].dataset.id);
+        })
+      }
+    }
   }
 
   /**
@@ -59,8 +62,8 @@ class TransactionsPage {
     if (this.lastOptions == null) {
       return;
     };
-    Account.remove(this.dataset.id, {}, (err, response) => {
-      if (response.sucess) {
+    Account.remove(this.lastOptions.account_id, {}, (err, response) => {
+      if (response && response.sucess) {
         alert ('Вы действительно хотите удалить счет?');
         App.update();
       }
@@ -74,7 +77,7 @@ class TransactionsPage {
    * */
   removeTransaction( id ) {
     Transaction.remove(id, {}, (err, response) => {
-      if (response.success) {
+      if (response && response.success) {
         alert('Вы действительно хотите удалить транзакцию?')
         App.update();
       } 
@@ -94,12 +97,12 @@ class TransactionsPage {
     this.lastOptions = options;
     Account.get(options.account_id , {}, (err, response) => {
       if (response.success) {
-        this.renderTitle();
+        this.renderTitle(response.data.name);
       } 
     });
     Transaction.list(options, (err, response) => {
       if (response.sucess) {
-        TransactionsPage.renderTransactions(response.data);
+        this.renderTransactions(response.data);
       }
     })
 
@@ -121,7 +124,7 @@ class TransactionsPage {
    * */
   renderTitle( name ) {
     const accountTitle = document.querySelector('.content-title');
-    accountTitle.innerHTML = name;
+    accountTitle.innerText = name;
   }
 
   /**

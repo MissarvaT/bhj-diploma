@@ -31,6 +31,7 @@ const createRequest = (options = {}) => {
         } else {
             request.send(formData);
         };
+        console.log(request);
         return request;
     }
     catch ( e ) {

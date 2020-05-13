@@ -13,9 +13,8 @@ class UserWidget {
   constructor( element ) {
     if (element == null) {
       alert('Ошибка! Элемент не найден')
-    } else {
-      this.element = element;
     }
+    this.element = element;
 
   }
 
@@ -30,7 +29,7 @@ class UserWidget {
     const currentUser = User.current();
     if (currentUser) {
       const userName = document.querySelector('.user-name');
-      userName.innerText = currentUser;
+      userName.innerText = currentUser.name;
     }
   }
 }

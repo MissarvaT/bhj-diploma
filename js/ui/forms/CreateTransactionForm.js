@@ -23,8 +23,8 @@ class CreateTransactionForm extends AsyncForm {
         if (response && response.data) {
           const accountSelect = this.element.querySelector('.accounts-select');
           accountSelect.innerHTML = '';
-          for (let account in response.data) {
-            accountSelect.innerHTML += `<option value="${account.id}">${account.name}</option>`
+          for (let i = 0; i < response.data.length; i++) {
+            accountSelect.innerHTML += `<option value="${response.data[i].id}">${response.data[i].name}</option>`
           }
         }
       });
@@ -40,7 +40,7 @@ class CreateTransactionForm extends AsyncForm {
   onSubmit( options ) {
     Transaction.create(options.data, (err,response) => {
       if (response && response.success) {
-        this.element.clear();
+        this.element.reset();
         App.getModal('newIncome').close();
         App.getModal('newExpense').close();
         App.update();
