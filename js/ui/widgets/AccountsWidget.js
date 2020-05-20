@@ -29,18 +29,16 @@ class AccountsWidget {
    * вызывает AccountsWidget.onSelectAccount()
    * */
   registerEvents() {
-    const newAccountButton = document.querySelector('.create-account');
-    newAccountButton.addEventListener('click', () => {
-      App.getModal('createAccount').open();
-    });
+    this.element.addEventListener('click', e => {
+      e.preventDefault();
+      if (e.target.classList.contains('create-account')) {
+        App.getModal('createAccount').open();
+      }
 
-    const accounts =  Array.from(document.querySelectorAll('.account'));
-    for (let i = 0; i < accounts.length; i++) {
-      accounts[i].addEventListener('click', (e) => {
-        e.preventDefault();
-        this.onSelectAccount(accounts[i]);
-      })
-    }
+      if (e.target.closest('.account')) {
+        this.onSelectAccount(e.target.closest('.account'));
+      }
+    });
   }
 
   /**
